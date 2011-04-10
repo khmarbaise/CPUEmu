@@ -1,0 +1,72 @@
+CPUSimulator in Java:
+
+Beziehung CPU <=> Speicher ?
+
+------
+CPU eine Klasse mit folgendens:
+
+	Register (Klasse 8, 16, 32 Bit ...zwei 8-Bit als 16 Bit ansprechbar?)
+	PC (Klasse 8, 16, 32 Bit)
+------
+
+
+	Stack (?) Stack Pointer (Register speziell!)
+	RAM (Eigene Klasse, Simulation Zugriffszeiten? )
+	FLASH (Eigene Klasse, mit Simulation von Schreibzeiten/ etc.)
+	Sonstiges...
+
+	I/O Elemente ? (A/D, LED, 7-Segment, etc.)
+
+Single-Step Ausführung, Breakpoints?, Laufzeit in Zyklen?
+
+CRegister sind Teil der CPU
+CPU <>--- CRegister
+
+
+class CRegister {
+	private	byte regValue;
+
+	public CRegister () {
+		this.regValue = 0; // ???
+	}
+
+	public byte getValue () {
+		return this.regValue;
+	}
+
+	public void setValue (byte value) {
+		this.regValue = value;
+	}
+}
+
+class CMemory {
+
+	private byte[] memory;
+ 
+	public CMemory (int	memSize) {
+		memory = new CByteArray (memSize);
+	}
+
+}
+
+
+Ablauf Simulation eines Befehls in einer CPU:
+
+Initialisierung: (Reset):
+	PC setzen auf Initialwert, Register auf start Werte setzen (eventuelle nicht initialisierung)
+
+
+   1. Befehl hohlen
+   2. zugehörige Daten holen (..Speicher zugriff!)
+   3. Ergebnisse in den Registern oder im Speicher ablegen
+			Behandlung IRQ??
+   4. PC erhöhen
+   5. gehe => 1 bis zur Ewigkeit...
+
+
+--------------------
+Für ein 8085 System
+
+Speicher (? Adresslage änderbar)
+I/O Per OUT/IN Befehl (1. Schritt Klasse US
+

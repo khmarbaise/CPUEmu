@@ -1,0 +1,6 @@
+
+	MVI  A,30
+	LXI  B,0200
+	INR  B
+	DCR  B
+

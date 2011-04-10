@@ -1,0 +1,201 @@
+<!-- 
+	Java CPU Emulator  (c) by SoftwareEntwicklung Beratung Schulung
+         JaCEm                              SoEBeS
+                              2005
+
+-->
+<project name="JaCem" default="main" basedir=".">
+	<description>
+	</description>
+	<!--
+		===================================================================
+		 Set the properties that control names and versions
+		===================================================================
+	-->
+	<property name="Name" value="Java CPU Emulator"/>
+	<property name="ShortName" value="JaCEm"/>
+	<property name="version" value="0.0.9"/>
+
+	<!-- set global properties for this build -->
+	<property name="src.dir" location="src"/>
+	
+	<property name="jars.dir" location="jars"/>
+
+	<property name="build.dir" location="build"/>
+	<property name="build.classes.dir" location="${build.dir}/classes/"/>
+	<property name="build.instrumented.dir" location="${build.dir}/instrumented/"/>
+
+	<property name="bin.dir" location="bin"/>
+
+	<property name="dist.dir"  location="dist"/>
+	<property name="dist.docs.dir" value="${dist.dir}/docs"/>
+
+	<property name="reports.dir" location="reports"/>
+	<property name="reports.coverage.dir" location="${reports.dir}/coverage"/>
+	<property name="reports.tests.dir" location="${reports.dir}/tests"/>
+	<property name="reports.tests.html.dir" location="${reports.tests.dir}/html"/>
+
+  	<taskdef classpathref="jcoverage" resource="tasks.properties"/>
+	
+	<path id="jcoverage">
+		<fileset dir="${jars.dir}">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+
+	<target name="init" description="Create all needed directories">
+		<mkdir dir="${dist.dir}" />
+		<mkdir dir="${dist.docs.dir}" />
+
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${build.classes.dir}" />
+		<mkdir dir="${build.instrumented.dir}" />
+
+		<mkdir dir="${reports.tests.dir}" />
+		<mkdir dir="${reports.tests.html.dir}" />
+	</target>
+
+	<target name="clean" description="clean up" >
+		<delete dir="${build.dir}"/>
+
+		<delete dir="${dist.dir}"/>
+
+		<delete dir="${reports.dir}"/>
+		<delete>
+			<fileset dir="${basedir}">
+				<include name="jcoverage.ser"/>
+				<include name="jcoverage.log"/>
+			</fileset>
+		</delete>
+	</target>
+
+	<target name="compile" depends="init" description="compile the source " >
+		<!-- Compile the java code from ${src.dir} into ${build.dir} -->
+		<javac srcdir="${src.dir}" destdir="${build.classes.dir}" debug="yes">
+			<classpath refid="jcoverage"/>
+		</javac>
+	</target>
+	
+	<target name="compiledist" depends="init" description="compile the source " >
+		<!-- Compile the java code from ${src.dir} into ${build.dir} -->
+		<javac srcdir="${src.dir}" destdir="${build.dir}" />
+	</target>
+	
+	<target name="manifest" description="Create Manifest file">
+		<manifest file="${dist.dir}/MANIFEST.MF">
+			<attribute name="Main-Class" value="com.soebes.jacem.JaCEm"/>
+		</manifest>
+	</target>
+
+	<target name="dist" depends="compiledist, manifest, junit" description="generate the distribution" >
+		<jar jarfile="${dist.dir}/${ShortName}-${version}.jar" basedir="${build.dir}" manifest="${dist.dir}/MANIFEST.MF">
+		</jar>
+	</target>
+	
+	<target name="instrument" description="Add jcoverage instrumentation">
+		<!--
+			instrument the application classes, writing the instrumented
+			classes into ${build.instrumented.dir}.
+		-->
+		<instrument todir="${build.instrumented.dir}">
+			<!--
+				Note that the following line causes instrument to ignore any
+				source line containing a reference to log4j, for the purposes
+				of coverage reporting.
+			-->
+			<ignore regex="org.apache.log4j.*"/>
+
+			<fileset dir="${build.classes.dir}">
+				<!--
+					instrument all the application classes, but don't instrument
+					the test classes.
+				-->
+				<include name="**/*.class"/>
+				<exclude name="**/*Test.class"/>
+				<exclude name="**/AllTests*.class"/>
+			</fileset>
+		</instrument>
+	</target>
+	
+	<target name="coverage" depends="init, compile, instrument, junit" description="HTML and XML coverage reports can be found in build/coverage">
+		<report srcdir="${src.dir}" destdir="${reports.coverage.dir}"/>
+		<report srcdir="${src.dir}" destdir="${reports.coverage.dir}" format="xml"/>
+
+		<echo>
+			jcoverage reports have been generated.
+			The HTML report is ${build.coverage.dir}/index.html
+			The XML report is ${build.coverage.dir}/coverage.xml
+		</echo>
+	</target>
+
+	<!-- This is only a aggregation Target -->
+	<target name="documentation"	description="Documentation Task">
+		<javadoc	destdir="${dist.docs.dir}"
+					author="true"
+					version="true"
+					use="true"
+					private="true"
+					windowtitle="${Name} - ${ShortName} Version ${version}">
+			<classpath refid="jcoverage"/>
+
+			<fileset dir="${src.dir}" defaultexcludes="yes" >
+				<exclude name="**/*Test.java" />
+			</fileset>
+			<doctitle><![CDATA[<h1>${Name} - ${ShortName} Version ${version}</h1>]]></doctitle>
+			<bottom><![CDATA[<i>Copyright &#169; 2005 <a href="http://www.soebes.de" target="_blank">SoftwareEntwicklung Beratung Schulung (SoEBeS). All Rights Reserved.</a></i>]]></bottom>
+			<tag name="todo" scope="all" description="To do:" />
+			<group title="JaCEm" packages="*"/>
+			<link offline="true" href="http://java.sun.com/products/jdk/1.2/docs/api/" packagelistLoc="/tmp"/>
+			<link href="http://developer.java.sun.com/developer/products/xml/docs/api/"/>
+		</javadoc>
+	</target>
+
+
+	<target name="junit" depends="compile" description="Run all JUnit Test incl. Reporting JUnitReport">
+		<junit printsummary="yes" haltonfailure="no">
+			<classpath refid="jcoverage"/>
+
+			<classpath location="${build.instrumented.dir}"/>
+			<classpath location="${build.classes.dir}"/>
+
+			<formatter type="xml"/>
+			<formatter type="brief"/>
+
+<!-- 			<test name="my.test.TestCase" haltonfailure="no" todir="${reports.tests.dir}" outfile="result">
+				<formatter type="xml"/>
+			</test> -->
+
+			<batchtest fork="yes" todir="${reports.tests.dir}">
+				<fileset dir="${src.dir}">
+					<include name="**/*Test.java"/>
+					<!-- <include name="**/AllTests*.java"/> -->
+					<exclude name="**/AllTests*.java"/>
+				</fileset>
+			</batchtest>
+		</junit>
+
+		<junitreport todir="${reports.tests.dir}">
+			<fileset dir="${reports.tests.dir}">
+				<include name="TEST-*.xml"/>
+			</fileset>
+			<report format="frames" todir="${reports.tests.html.dir}"/>
+		</junitreport>
+	</target>
+
+	<target name="jtestrun" depends="compile" description="">
+		<jtestrun todir="${reports.tests.dir}">
+			<classpath>
+				<path location="${build.instrumented.dir}"/>
+				<path location="${build.classes.dir}"/>
+				<fileset dir="${jars.dir}">
+					<include name="*.jar"/>
+				</fileset>
+			</classpath>
+			<fileset dir="${src.dir}">
+				<include name="**/*Test.java"/>
+			</fileset>
+		</jtestrun>
+	</target>
+
+</project>
+
