@@ -1,0 +1,158 @@
+<project
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.soebes.smpp</groupId>
+    <artifactId>smpp</artifactId>
+    <version>0.1</version>
+  </parent>
+
+  <groupId>com.soebes.jacem</groupId>
+  <artifactId>jacem</artifactId>
+  <version>0.1-SNAPSHOT</version>
+
+  <name>JaCEM</name>
+  <description>Java CPU Emulator (JaCEm)</description>
+  <url>https://github.com/khmarbaise/jacem</url>
+  <inceptionYear>2005</inceptionYear>
+
+  <organization>
+    <name>SoftwareEntwicklung Beratung Schulung</name>
+    <url>http://www.soebes.com</url>
+  </organization>
+
+  <licenses>
+    <license>
+      <name>Apache License 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <id>kama</id>
+      <name>Karl Heinz Marbaise</name>
+      <email>sapm@soebes.de</email>
+      <roles>
+        <role>Lead</role>
+        <role>Committer</role>
+      </roles>
+    </developer>
+  </developers>
+
+  <issueManagement>
+    <system>default</system>
+    <url>https://github.com/khmarbaise/jacem/issues</url>
+  </issueManagement>
+
+  <properties>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <scm>
+    <developerConnection>scm:git:git@github.com:khmarbaise/jacem.git</developerConnection>
+    <connection>scm:git:git://github.com/khmarbaise/jacem.git</connection>
+    <url>https://github.com/khmarbaise/jacem</url>
+  </scm>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-deploy-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.6</source>
+          <target>1.6</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>com.mycila.maven-license-plugin</groupId>
+        <artifactId>maven-license-plugin</artifactId>
+        <configuration>
+          <header>src/main/etc/header.txt</header>
+          <quiet>false</quiet>
+          <aggregate>true</aggregate>
+          <failIfMissing>false</failIfMissing>
+          <includes>
+            <include>src/**</include>
+          </includes>
+          <excludes>
+            <exclude>src/main/resources/**</exclude>
+            <exclude>src/test/resources/**</exclude>
+            <exclude>target/**</exclude>
+          </excludes>
+          <mapping>
+            <g>DOUBLESLASH_STYLE</g>
+            <apt.vm>DOUBLETILDE_STYLE</apt.vm>
+            <apt>DOUBLETILDE_STYLE</apt>
+          </mapping>
+          <properties>
+            <year>2006-2011</year>
+            <email>sapm@soebes.de</email>
+          </properties>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-project-info-reports-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-changes-plugin</artifactId>
+        <version>2.3</version>
+        <configuration>
+          <issueLinkTemplatePerSystem>
+            <default>https://github.com/khmarbaise/jacem/issues/%ISSUE% </default>
+          </issueLinkTemplatePerSystem>
+        </configuration>
+        <reportSets>
+          <reportSet>
+            <reports>
+              <report>changes-report</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
+    </plugins>
+  </reporting>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.8.2</version>
+      <type>jar</type>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+</project>
