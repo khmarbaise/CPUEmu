@@ -70,6 +70,16 @@ public class RegisterSet {
 		}
 	}
 
+	public void decrement(Register8Bit register) {
+		if (register == Register8Bit.M) {
+			int address = registerSet[Register8Bit.H.ordinal()] * 256 + registerSet[Register8Bit.L.ordinal()];
+			int result = getMem().getMem(address);
+			getMem().setMem(address, result -1);
+		} else {
+			registerSet[register.ordinal()]--;
+		}
+	}
+
 	public void setMem(CMemoryByte mem) {
 		this.mem = mem;
 	}
