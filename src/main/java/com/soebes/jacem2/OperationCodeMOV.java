@@ -6,15 +6,16 @@ public class OperationCodeMOV extends AbstractOperationCode {
 
 	public OperationCodeMOV(CMemoryByte memory, RegisterSet registerSet) {
 		super(memory, registerSet);
+
+		setNumberOfBytes(1);
+		setMnemonic("MOV");
 	}
 
 	@Override
 	public void execute() {
-		setNumberOfBytes(1);
-		setMnemonic("MOV");
 
-		Register8Bit registerSrc = convertToRegister(getOperationCode() & 0x07);
-		Register8Bit registerDest = convertToRegister((getOperationCode() & 0x38) >> 3);
+		Register8Bit registerSrc = convertToRegister8Bit(getOperationCode() & 0x07);
+		Register8Bit registerDest = convertToRegister8Bit((getOperationCode() & 0x38) >> 3);
 		
 		if (registerSrc == Register8Bit.M) {
 			setCycles(7);

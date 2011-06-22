@@ -6,13 +6,15 @@ public class OperationCodeNOP extends AbstractOperationCode {
 
 	public OperationCodeNOP(CMemoryByte memory, RegisterSet registerSet) {
 		super(memory, registerSet);
+
+		setNumberOfBytes(1);
+		setMnemonic("NOP");
+
+		setCycles(4);
 	}
 
 	@Override
 	public void execute() {
-		setNumberOfBytes(1);
-		setMnemonic("NOP");
-		setCycles(4);
 		setOperators(null);
 	}
 

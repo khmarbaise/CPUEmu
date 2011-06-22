@@ -68,10 +68,13 @@ public abstract class AbstractOperationCode implements OperationCode {
 		this.operators = operators;
 	}
 
-	public Register8Bit convertToRegister(int src) {
+	public Register8Bit convertToRegister8Bit(int src) {
 		return Register8Bit.values()[src];
 	}
 
+	public Register16Bit convertToRegister16Bit(int src) {
+		return Register16Bit.values()[src];
+	}
 	public void setRegisterSet(RegisterSet registerSet) {
 		this.registerSet = registerSet;
 	}

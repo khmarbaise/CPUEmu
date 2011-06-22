@@ -6,14 +6,15 @@ public class OperationCodeINR extends AbstractOperationCode {
 
 	public OperationCodeINR(CMemoryByte memory, RegisterSet registerSet) {
 		super(memory, registerSet);
+
+		setNumberOfBytes(1);
+		setMnemonic("INR");
 	}
 
 	@Override
 	public void execute() {
-		setNumberOfBytes(1);
-		setMnemonic("INR");
 
-		Register8Bit register = convertToRegister((getOperationCode() & 0x38) >> 3);
+		Register8Bit register = convertToRegister8Bit((getOperationCode() & 0x38) >> 3);
 
 		if (register == Register8Bit.M){
 			setCycles(10);
