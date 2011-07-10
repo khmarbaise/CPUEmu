@@ -1,5 +1,6 @@
 package com.soebes.jacem2;
 
+import com.soebes.jacem.CFormat;
 import com.soebes.jacem.memory.CMemoryByte;
 
 public class RegisterSet {
@@ -11,6 +12,16 @@ public class RegisterSet {
 	private int registerSet[] = new int[Register8Bit.values().length];
 	private int registerSP = 0; 
 	
+	public String show() {
+		StringBuffer tmp = new StringBuffer();
+		for(Register8Bit register : Register8Bit.values()) {
+			int value = getRegister(register);
+			tmp.append(register.name() + CFormat.toHex8(value) + " ");
+		}
+		tmp.append("SP" + CFormat.toHex16(getRegister(Register16Bit.SP)));
+		return tmp.toString();
+	}
+
 	public RegisterSet(CMemoryByte mem) {
 		this.setMem(mem);
 	}

@@ -13,11 +13,17 @@ public class OperationCodeMVI extends AbstractOperationCode {
 
 	@Override
 	public void execute() {
-		Register8Bit register = convertToRegister8Bit(getOperationCode() & 0x07);
+		Register8Bit register = convertToRegister8Bit( (getOperationCode() & 0xe8) >> 3 );
+
+		if (register == Register8Bit.M) {
+			setCycles(10);
+		} else {
+			setCycles(7);
+		}
 
 		int value = getMemory().getMem(getRegisterSet().getProgrammCounter());
-		
 		getRegisterSet().setRegister(register, value);
+
 		setOperators(register.name() + "," + value);
 	}
 

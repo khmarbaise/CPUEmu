@@ -13,7 +13,7 @@ public class OperationCodeDCX extends AbstractOperationCode {
 
 	@Override
 	public void execute() {
-		Register16Bit register = convertToRegister16Bit((getOperationCode() & 0x0b) >> 4);
+		Register16Bit register = convertToRegister16Bit((getOperationCode() & 0x70) >> 4);
 
 		getRegisterSet().decrement(register);
 

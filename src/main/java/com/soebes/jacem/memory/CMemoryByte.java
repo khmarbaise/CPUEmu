@@ -4,6 +4,7 @@
 package com.soebes.jacem.memory;
 
 import com.soebes.jacem.CFormat;
+import com.soebes.jacem2.OperationCodes;
 
 /**
 * Java CPU Emulator (c) 2005 by SoEBeS
@@ -48,6 +49,10 @@ public class CMemoryByte {
 		} else {
 			this.mem[address] = val;
 		}
+	}
+
+	public void setMem (int address, OperationCodes opc) {
+		this.mem[address] = opc.ordinal();
 	}
 
 	public void setMem16 (int address, int val) {

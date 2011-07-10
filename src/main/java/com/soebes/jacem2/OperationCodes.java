@@ -7,7 +7,7 @@ public enum OperationCodes {
 	INX_B,
 	INR_B,
 	DCR_B,
-	A06,
+	MVI_B,
 	A07,
 
 	A08,
@@ -16,7 +16,7 @@ public enum OperationCodes {
 	DCX_B,
 	INR_C,
 	DCR_C,
-	A0E,
+	MVI_C,
 	A0F,
 
 	A10,
@@ -25,7 +25,7 @@ public enum OperationCodes {
 	INX_D,
 	INR_D,
 	DCR_D,
-	A16,
+	MVI_D,
 	A17,
 
 	A18,
@@ -34,7 +34,7 @@ public enum OperationCodes {
 	DCX_D,
 	INR_E,
 	DCR_E,
-	A1E,
+	MVI_E,
 	A1F,
 
 	A20,
@@ -43,7 +43,7 @@ public enum OperationCodes {
 	INX_H,
 	INR_H,
 	DCR_H,
-	A26,
+	MVI_H,
 	A27,
 
 	A28,
@@ -52,7 +52,7 @@ public enum OperationCodes {
 	DCX_H,
 	INR_L,
 	DCR_L,
-	A2E,
+	MVI_L,
 	A2F,
 
 	A30,
@@ -61,7 +61,7 @@ public enum OperationCodes {
 	INX_SP,
 	INR_M,
 	DCR_M,
-	A36,
+	MVI_M,
 	A37,
 
 	A38,

@@ -7,6 +7,7 @@ public interface OperationCode {
 
 	String getMnemonic();
 	String getOperators();
+	boolean hasOperators();
 
 	void execute();
 

@@ -60,6 +60,14 @@ public abstract class AbstractOperationCode implements OperationCode {
 		this.mnemonic = mnemonic;
 	}
 
+	public boolean hasOperators() {
+		if (operators == null || operators.isEmpty()) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
 	public String getOperators() {
 		return operators;
 	}
