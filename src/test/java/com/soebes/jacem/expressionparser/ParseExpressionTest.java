@@ -1,9 +1,13 @@
 package com.soebes.jacem.expressionparser;
 
-import junit.framework.TestCase;
+import org.testng.annotations.Test;
 
-public class ParseExpressionTest extends TestCase {
+public class ParseExpressionTest {
 
+	@Test
+	public void deactivatedTest() {
+		//Nothing to do.
+	}
 }
 /*
 
