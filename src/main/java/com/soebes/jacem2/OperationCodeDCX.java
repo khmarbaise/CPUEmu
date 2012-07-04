@@ -4,20 +4,20 @@ import com.soebes.jacem.memory.CMemoryByte;
 
 public class OperationCodeDCX extends AbstractOperationCode {
 
-	public OperationCodeDCX(CMemoryByte memory, RegisterSet registerSet) {
-		super(memory, registerSet);
+    public OperationCodeDCX(CMemoryByte memory, RegisterSet registerSet) {
+        super(memory, registerSet);
 
-		setNumberOfBytes(1);
-		setMnemonic("DCX");
-	}
+        setNumberOfBytes(1);
+        setMnemonic("DCX");
+    }
 
-	@Override
-	public void execute() {
-		Register16Bit register = convertToRegister16Bit((getOperationCode() & 0x70) >> 4);
+    @Override
+    public void execute() {
+        Register16Bit register = convertToRegister16Bit((getOperationCode() & 0x70) >> 4);
 
-		getRegisterSet().decrement(register);
+        getRegisterSet().decrement(register);
 
-		setOperators(register.name());
-	}
+        setOperators(register.name());
+    }
 
 }

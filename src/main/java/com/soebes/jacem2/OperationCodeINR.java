@@ -4,28 +4,28 @@ import com.soebes.jacem.memory.CMemoryByte;
 
 public class OperationCodeINR extends AbstractOperationCode {
 
-	public OperationCodeINR(CMemoryByte memory, RegisterSet registerSet) {
-		super(memory, registerSet);
+    public OperationCodeINR(CMemoryByte memory, RegisterSet registerSet) {
+        super(memory, registerSet);
 
-		setNumberOfBytes(1);
-		setMnemonic("INR");
-	}
+        setNumberOfBytes(1);
+        setMnemonic("INR");
+    }
 
-	@Override
-	public void execute() {
+    @Override
+    public void execute() {
 
-		Register8Bit register = convertToRegister8Bit((getOperationCode() & 0x38) >> 3);
+        Register8Bit register = convertToRegister8Bit((getOperationCode() & 0x38) >> 3);
 
-		if (register == Register8Bit.M){
-			setCycles(10);
-		} else {
-			setCycles(4);
-		}
+        if (register == Register8Bit.M) {
+            setCycles(10);
+        } else {
+            setCycles(4);
+        }
 
-		getRegisterSet().increment(register);
+        getRegisterSet().increment(register);
 
-		setOperators(register.name());
+        setOperators(register.name());
 
-	}
+    }
 
 }

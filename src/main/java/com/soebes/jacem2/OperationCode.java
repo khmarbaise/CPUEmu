@@ -2,14 +2,17 @@ package com.soebes.jacem2;
 
 public interface OperationCode {
 
-	int getCycles();
-	int getNumberOfBytes();
+    int getCycles();
 
-	String getMnemonic();
-	String getOperators();
-	boolean hasOperators();
+    int getNumberOfBytes();
 
-	void execute();
+    String getMnemonic();
 
-	void setOperationCode(int opc);
+    String getOperators();
+
+    boolean hasOperators();
+
+    void execute();
+
+    void setOperationCode(int opc);
 }

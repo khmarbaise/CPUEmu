@@ -4,21 +4,21 @@ import com.soebes.jacem.memory.CMemoryByte;
 
 public class OperationCodeINX extends AbstractOperationCode {
 
-	public OperationCodeINX(CMemoryByte memory, RegisterSet registerSet) {
-		super(memory, registerSet);
+    public OperationCodeINX(CMemoryByte memory, RegisterSet registerSet) {
+        super(memory, registerSet);
 
-		setNumberOfBytes(1);
-		setMnemonic("INX");
-	}
+        setNumberOfBytes(1);
+        setMnemonic("INX");
+    }
 
-	@Override
-	public void execute() {
-		
-		Register16Bit register = convertToRegister16Bit((getOperationCode() & 0x70) >> 4);
+    @Override
+    public void execute() {
 
-		getRegisterSet().increment(register);
+        Register16Bit register = convertToRegister16Bit((getOperationCode() & 0x70) >> 4);
 
-		setOperators(register.name());
-	}
+        getRegisterSet().increment(register);
+
+        setOperators(register.name());
+    }
 
 }
