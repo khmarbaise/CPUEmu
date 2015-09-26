@@ -57,7 +57,7 @@ public class CMemoryByte {
 
 	public void setMem16 (int address, int val) {
 		this.setMem(address, val & 0x00ff);
-		this.setMem(address, (val & 0xff00) >> 8);
+		this.setMem(address+1, (val & 0xff00) >> 8);
 	}
 	public int getMem (int address) {
 		return this.mem[address];
